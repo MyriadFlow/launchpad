@@ -14,11 +14,7 @@ import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import Link from "next/link";
 
-import { getAuth, signInWithPopup, TwitterAuthProvider, FacebookAuthProvider } from "firebase/auth";
-import { initializeApp } from 'firebase/app';
-
 import { generateCodeVerifier, generateCodeChallenge } from '../utils/pkceUtils';
-
 
 const codeVerifier = generateCodeVerifier();
 const codeChallenge = generateCodeChallenge(codeVerifier);
@@ -41,7 +37,7 @@ const getTwitterOauthUrl = async () => {
 
 const getUserDataFromLocalStorage = () => {
   if (typeof window !== 'undefined') {
-    const userData = localStorage.getItem('twitteruserData');
+    const userData = localStorage.getItem('twitterData');
     return userData ? JSON.parse(userData) : null;
   }
   return null;
@@ -369,7 +365,7 @@ function Profile() {
                 <Card title="Twitter Account"
                   footer={
                     <div className="flex flex-wrap justify-content-start gap-2">
-                      
+                      <Button onClick={getTwitterOauthUrl} label="Connect" icon="pi pi-check"/>
                       {
                         twitt ? (
                           <>
@@ -461,17 +457,20 @@ function Profile() {
                     <p className="flex p-5 justify-content-around">Twitter account connected</p>
                     <div className="flex justify-content-around">
                       <div>
-                        {/* <img style={{ height: "150px", borderRadius: '50%' }} src={twitt.reloadUserInfo.providerUserInfo[0].photoUrl}></img> */}
+                        <img style={{ height: "150px", borderRadius: '50%' }} src={twitt.profile_image_url_https}></img>
                       </div>
                       <div className="flex text-2xl">
                         <div className="ml-5 text-gray-500 dark:text-white">
                           <Link href={`https://twitter.com/${twitt.screen_name}`} target="_blank">
                             Go to Twitter profile
                           </Link>
-                          <p>User ID : {twitt.screen_name}
-                          </p>
-                          {/* <p>Screen Name: {twitt.screen_name}</p> */}
-                          {/* <p>Joined on: {new Date(parseInt(twitt.metadata.createdAt)).toDateString()}</p> */}
+                          <p>User ID : {twitt.screen_name} </p>
+                          <p>Screen Name: {twitt.name}</p>
+                          {/* <p>Joined on: {new Date(parseInt(twitt.createdAt)).toDateString()}</p> */}
+                          <p>Joined on: {new Date(twitt.created_at).toLocaleString('default', { month: 'long' })} {new Date(twitt.created_at).getFullYear()}</p>
+                          <p>Bio: {twitt.description}</p>
+                          <p>Followers: {twitt.followers_count}</p>
+                          <p>Following: {twitt.friends_count}</p>
                         </div>
                       </div>
 
