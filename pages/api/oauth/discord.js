@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const CLIENT_ID = '1109915781707350016';
-const REDIRECT_URL = 'http://localhost:3000/api/oauth/discord';
-const CLIENT_SECRET = 'r-ayJxsZMrvDvgDlWio6_Fi1j9C_yvlW';
+const CLIENT_ID = process.env.NEXT_PUBLIC_MYRIADFLOW_DISCORD_CLIENT_ID;
+const REDIRECT_URL = process.env.NEXT_PUBLIC_MYRIADFLOW_DISCORD_REDIRECT_URI;
+const CLIENT_SECRET = process.env.NEXT_PUBLIC_MYRIADFLOW_DISCORD_CLIENT_SECRET;
 const API_ENDPOINT = 'https://discord.com/api/v10';
 
 
@@ -60,6 +60,14 @@ export default async function handler(req, res) {
           Authorization: `Bearer ${response.data.access_token}`,
         },
       });
+
+      // Set the cookie with the user data
+      res.setHeader(
+        'Set-Cookie',
+        `discordUserData=${JSON.stringify(userDataResponse.data)}; Path=/; Secure; SameSite=None`
+      );
+
+      res.redirect("/profile");
   
       // Send a response with the user data
       res.status(200).json({ user: userDataResponse.data});

@@ -66,8 +66,8 @@ import crypto from 'crypto';
 import qs from 'qs';
 import got from 'got';
 
-const consumer_key = process.env.MYRIADFLOW_TWITTER_API_KEY;
-const consumer_secret = process.env.MYRIADFLOW_TWITTER_API_SECRET_KEY;
+const consumer_key = process.env.NEXT_PUBLIC_MYRIADFLOW_TWITTER_API_KEY;
+const consumer_secret = process.env.NEXT_PUBLIC_MYRIADFLOW_TWITTER_API_SECRET_KEY;
 
 const verifyCredentialsURL = 'https://api.twitter.com/1.1/account/verify_credentials.json';
 

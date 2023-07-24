@@ -13,6 +13,7 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import Link from "next/link";
+import Cookies from 'js-cookie';
 
 import { generateCodeVerifier, generateCodeChallenge } from '../utils/pkceUtils';
 
@@ -22,17 +23,17 @@ const codeChallenge = generateCodeChallenge(codeVerifier);
 
 // twitter oauth Url constructor
 const getTwitterOauthUrl = async () => {
-   
-  try{
-  const response = await fetch("/api/oauth/twitter"); // Send a request to the server-side API route
-  const data = await response.json();
-  const { oauth_token } = data;
-  // Redirect the user to the Twitter authorization URL
-  window.location.href = `https://api.twitter.com/oauth/authorize?oauth_token=${oauth_token}`;
-} catch (error) {
-  console.error('Failed to initiate Twitter OAuth:', error);
-  // Handle error, show error message, etc.
-}
+
+  try {
+    const response = await fetch("/api/oauth/twitter"); // Send a request to the server-side API route
+    const data = await response.json();
+    const { oauth_token } = data;
+    // Redirect the user to the Twitter authorization URL
+    window.location.href = `https://api.twitter.com/oauth/authorize?oauth_token=${oauth_token}`;
+  } catch (error) {
+    console.error('Failed to initiate Twitter OAuth:', error);
+    // Handle error, show error message, etc.
+  }
 }
 
 const getUserDataFromLocalStorage = () => {
@@ -54,6 +55,15 @@ function Profile() {
     settwitt(userData);
   }, []);
 
+  useEffect(() => {
+    const cookieUserData = Cookies.get('discordUserData');
+    if (cookieUserData) {
+      const parsedUserData = JSON.parse(cookieUserData);
+      setdiscordData(parsedUserData);
+      console.log('User data', parsedUserData);
+    }
+  }, []);
+
 
   const profile = {
     name: "",
@@ -70,6 +80,7 @@ function Profile() {
   const [updateProfile, setupdateProfile] = useState({ ...profile });
   const router = useRouter();
   const [twitt, settwitt] = useState(null);
+  const [discordData, setdiscordData] = useState(null);
   const [fb, setfb] = useState(null);
 
   async function uploadImage(e) {
@@ -277,15 +288,11 @@ function Profile() {
 
   // -------------------       discord auth        ------------------------------------------//
 
+  const CLIENT_ID = process.env.NEXT_PUBLIC_MYRIADFLOW_DISCORD_CLIENT_ID;
+  const REDIRECT_URL = process.env.NEXT_PUBLIC_MYRIADFLOW_DISCORD_REDIRECT_URI;
+
   const handleLogin = () => {
-    // Replace with your Discord application's client ID and redirect URI
-    const clientId = '1127173732104929332';
-    const redirectUri = 'http://localhost:3000/api/discord-redirect'; // Replace with your redirect URI
-
-    // Generate the Discord authorization URL
-    const authorizationUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify`;
-
-    window.location.href = authorizationUrl;
+    window.location.href = `https://discord.com/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&scope=identify&redirect_uri=${REDIRECT_URL}`; // Adjust the scope as needed
   };
 
 
@@ -327,7 +334,17 @@ function Profile() {
                 <Card title="Discord Account"
                   footer={
                     <div className="flex flex-wrap justify-content-start gap-2">
-                      <Button onClick={handleLogin} label="Connect" icon="pi pi-check" />
+                      {
+                        discordData ? (
+                          <>
+                            <Button label="Connected" icon="pi pi-check" />
+                          </>
+                        ) : (
+                          <>
+                            <Button onClick={handleLogin} label="Connect" icon="pi pi-check" />
+                          </>
+                        )
+                      }
                       <Button label="Cancel" icon="pi pi-times" className="p-button-outlined p-button-secondary" />
                     </div>
                   }
@@ -365,7 +382,6 @@ function Profile() {
                 <Card title="Twitter Account"
                   footer={
                     <div className="flex flex-wrap justify-content-start gap-2">
-                      <Button onClick={getTwitterOauthUrl} label="Connect" icon="pi pi-check"/>
                       {
                         twitt ? (
                           <>
@@ -373,7 +389,7 @@ function Profile() {
                           </>
                         ) : (
                           <>
-                            <Button onClick={getTwitterOauthUrl} label="Connect" icon="pi pi-check"/>
+                            <Button onClick={getTwitterOauthUrl} label="Connect" icon="pi pi-check" />
                           </>
                         )
                       }
@@ -403,6 +419,9 @@ function Profile() {
 
         </>
       ) : null}
+
+
+
 
 
       <div className="pt-5">
@@ -471,6 +490,28 @@ function Profile() {
                           <p>Bio: {twitt.description}</p>
                           <p>Followers: {twitt.followers_count}</p>
                           <p>Following: {twitt.friends_count}</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </>
+                ) : null}
+
+
+                {discordData ? (
+                  <>
+                    <p className="flex p-5 justify-content-around">Discord account connected</p>
+                    <div className="flex justify-content-around">
+                      <div>
+                        <img style={{ height: "150px", borderRadius: '50%' }} src={`https://cdn.discordapp.com/avatars/${discordData.id}/${discordData.avatar}.png`}></img>
+                      </div>
+                      <div className="flex text-2xl">
+                        <div className="ml-5 text-gray-500 dark:text-white">
+                          <Link href={`https://discord.com/users/${discordData.id}`} target="_blank">
+                            Go to Discord profile
+                          </Link>
+                          <p>User ID : {discordData.username} </p>
+                          <p>Screen Name: {discordData.global_name}</p>
                         </div>
                       </div>
 
