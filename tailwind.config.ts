@@ -7,11 +7,20 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: '430px',   // 0.25 mobile
+      md: '720px',   // 0.5  tablet
+      lg: '1080px',  // 0.75 desktop
+      xl: '1440px',  // 1    large desktop
+    },
+    fontFamily: {
+      primary: ['Azonix', 'sans-serif'],
+      poppins: ['Poppins', 'sans-serif'],
+    },
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        primary: "url('/main-background.png')",
+        dotLineGradient: "url('/dot-gradient.png')"
       },
     },
   },
