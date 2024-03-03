@@ -18,7 +18,7 @@ const LaunchSuccessModal: React.FC = () => {
 
 const Step1: React.FC = () => {
   return (
-    <div className='bg-[#AECDFE] xl:w-[1120px] w-[850px] xl:h-[920px] rounded-lg xl:px-8 xl:py-12 py-8 px-6 flex flex-col items-center xl:gap-x-8 gap-x-6 xl:mb-16 my-12'>
+    <div className='bg-[#AECDFE] xl:w-[1120px] w-[850px] rounded-lg xl:px-8 xl:py-12 py-8 px-6 flex flex-col items-center justify-center xl:gap-x-8 gap-x-6 xl:mb-16 my-12'>
         <div className='w-full flex gap-x-6'>
             <div className='w-full'>
                 <p className='xl:text-[26px] text-[20px] font-medium mb-2'>Enter TradeHub Name</p>

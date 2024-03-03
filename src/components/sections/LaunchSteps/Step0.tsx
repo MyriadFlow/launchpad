@@ -3,6 +3,10 @@ import Select from '@/components/ui/Select'
 import Input from '@/components/ui/Input';
 import { IoCloseOutline } from "react-icons/io5";
 
+interface Step0Props {
+    onContinue: () => void
+}
+
 const blockchainOptions = ['Mumbai', 'Sepolia']
 const paragraph ='You have assumed the role of administrator. The deployment of Flow access master has been completed successfully.'
 
@@ -18,11 +22,11 @@ const LaunchSuccessModal: React.FC = () => {
     );
 }
 
-const Step0: React.FC = () => {
+const Step0: React.FC<Step0Props> = ({onContinue}) => {
   return (
     <div className='flex flex-col items-center'>
         <p className='font-semibold my-6 font-poppins xl:text-[30px] text-[23px]'>Enter storefront Details in testnet</p>
-        <div className='bg-[#AECDFE] xl:w-[1120px] w-[850px] xl:h-[920px] rounded-lg xl:px-8 xl:py-12 py-8 px-6 flex xl:gap-x-8 gap-x-6 xl:mb-16 mb-12'>
+        <div className='bg-[#AECDFE] xl:w-[1120px] w-[850px] rounded-lg xl:px-8 xl:py-12 py-8 px-6 flex xl:gap-x-8 gap-x-6 xl:mb-16 mb-12'>
             <div className='xl:w-[270px] w-[200px] xl:h-[270px] h-[200px] border border-dashed border-black rounded-xl'></div>
             <div className='flex-grow h-full xl:gap-y-8 gap-y-6 flex flex-col'>
                 <div>
@@ -48,7 +52,7 @@ const Step0: React.FC = () => {
 
                 <div className='flex gap-x-4'>
                     <button className='xl:w-[10rem] w-[7.5rem] xl:h-12 h-9 border-black border rounded-full font-semibold'>Cancel</button>
-                    <button className='xl:w-[10rem] w-[7.5rem] xl:h-12 h-9 border-none rounded-full font-semibold bg-buttonGradient text-white'>Continue</button>
+                    <button className='xl:w-[10rem] w-[7.5rem] xl:h-12 h-9 border-none rounded-full font-semibold bg-buttonGradient text-white' onClick={onContinue}>Continue</button>
                 </div>
             </div>
         </div>
