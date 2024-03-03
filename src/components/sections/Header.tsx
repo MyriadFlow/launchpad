@@ -13,7 +13,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <main className='page lg:h-[4rem] md:h-[3rem] sm:h-[2.5rem] h-[2.5rem] bg-[#f6f6f6fa]'>
+    <main className='page lg:h-[4rem] md:h-[3rem] sm:h-[2.5rem] h-[2.5rem] bg-[#f6f6f6fa] fixed z-50 top-0 left-0'>
       <div className='container flex flex-row items-center justify-between h-full px-12 gap-x-2'>
         <div className='flex flex-row items-center'>
           <img src={Logo.src} className='w-[4rem] h-[4rem]' />

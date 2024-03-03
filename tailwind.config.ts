@@ -20,7 +20,8 @@ const config: Config = {
     extend: {
       backgroundImage: {
         primary: "url('/main-background.png')",
-        dotLineGradient: "url('/dot-gradient.png')"
+        dotLineGradient: "url('/dot-gradient.png')",
+        buttonGradient: 'var(--button-gradient)',
       },
     },
   },

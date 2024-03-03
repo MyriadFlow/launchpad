@@ -5,6 +5,10 @@
 
 :root {
   --color-primary: #3490dc;
+  --button-gradient: linear-gradient(
+    #5347e7 0%,
+    #2d9fd3 100%
+  );
 }
 
 .scrollbar-hidden {
