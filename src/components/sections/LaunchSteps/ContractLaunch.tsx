@@ -11,11 +11,15 @@ import EthernumPassImage from '@/public/etherum-pass.png';
 import EternalSoulImage from '@/public/eternal-soul.png';
 import PhygitalImage from '@/public/phygital.png'
 
+interface ContractLaunchProps {
+  onLaunch: () => void
+}
+
 const linkButton = 'flex font-normal xl:text-[25px] text-[18px] text-[#bdbef7] gap-x-3 xl:gap-x-4 items-center cursor-pointer';
 
 const selectedLinkButton = 'flex font-normal xl:text-[25px] text-[18px] text-white gap-x-3 xl:gap-x-4 items-center font-semibold cursor-pointer';
 
-const ContractLaunch: React.FC = () => {
+const ContractLaunch: React.FC<ContractLaunchProps> = ({onLaunch}) => {
   const [selectedButton, setSelectedButton] = useState<'signature' | 'fussion' | 'instagen' | 'ethernum' | 'eternal' | 'phygital'>('signature');
 
   // Initialize dynamicContent state with values for 'signature'
@@ -114,9 +118,7 @@ const ContractLaunch: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Section */}
         <div className="h-full xl:w-[660px] w-[495px] bg-[#c4d1fc] rounded-r-xl xl:px-16 flex flex-col justify-center items-center px-12">
-          {/* Conditional Rendering for Dynamic Content */}
           {dynamicContent && (
             <div className='w-full flex flex-col items-center'>
               <img src={dynamicContent.image} alt="Dynamic Content" className="xl:w-[380px] w-[285px] xl:h-[380px] h-[285px]" />
@@ -126,7 +128,7 @@ const ContractLaunch: React.FC = () => {
                     <p className="mt-2 xl:w-[340px] w-[255px] font-normal xl:text-[20px] text-[15px]">{dynamicContent.paragraph}</p>
                 </div>
                 <div className='h-full flex items-center justify-center'>
-                    <button className='bg-[#5347e7] xl:w-[140] w-[105px] text-white rounded-full xl:h-[32px] h-[24px] xl:text-[18px] text-[14px] items-center flex justify-center my-auto'>Launch</button>
+                    <button className='bg-[#5347e7] xl:w-[140] w-[105px] text-white rounded-full xl:h-[32px] h-[24px] xl:text-[18px] text-[14px] items-center flex justify-center my-auto' onClick={onLaunch}>Launch</button>
                 </div>
               </div>
             </div>

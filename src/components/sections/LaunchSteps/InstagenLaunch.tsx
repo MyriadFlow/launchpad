@@ -88,7 +88,7 @@ const Instagen: React.FC = () => {
                     <p className='xl:text-[26px] text-[20px] font-normal'>Upload File</p>
                     <div className='w-full gap-x-12'>
                         <button className='w-full xl:h-[190px] h-[150px] rounded-xl border-black border border-dashed flex items-center justify-center text-[22px] gap-x-2'>
-                            <button className='bg-[#5347E7] xl:text-[18px] text-[14px] text-white px-6 py-1'>Choose File</button>
+                            <div className='bg-[#5347E7] xl:text-[18px] text-[14px] text-white px-6 py-1'>Choose File</div>
                         </button>
                     </div>
                 </div>

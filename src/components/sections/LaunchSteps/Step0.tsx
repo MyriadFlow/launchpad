@@ -10,19 +10,25 @@ interface Step0Props {
 const blockchainOptions = ['Mumbai', 'Sepolia']
 const paragraph ='You have assumed the role of administrator. The deployment of Flow access master has been completed successfully.'
 
-const LaunchSuccessModal: React.FC = () => {
+const LaunchSuccessModal: React.FC<Step0Props> = ({onContinue}) => {
     return(
         <div className='w-full h-screen fixed top-0 right-0 bg-transparent inset-0 z-50 flex items-center justify-center'>
             <div className='xl:w-[710px] xl:h-[510px] w-[533px] h-[383px] bg-[#6459e9] rounded-md flex flex-col items-center justify-center gap-y-9 xl:gap-y-12 relative'>
                 <p className='font-semibold text-white xl:text-[32px] text-[24px]'>Well Done!</p>
                 <p className='font-normal xl:text-[28px] text-[21px] text-white text-center xl:w-[590px] w-[443px]'>{paragraph}</p>
-                <button className='absolute top-0 right-0 p-4'><IoCloseOutline className='text-[24px] text-[#FFFFFF99]' /></button>
+                <button className='absolute top-0 right-0 p-4'><IoCloseOutline className='text-[24px] text-[#FFFFFF99]' onClick={onContinue} /></button>
             </div>
         </div>
     );
 }
 
 const Step0: React.FC<Step0Props> = ({onContinue}) => {
+    const [isSuccessful, setIsSuccessful] = useState(false);
+
+    const handleContinue = () => {
+        // Additional logic can be added here if needed before setting isSuccessful to true
+        setIsSuccessful(true);
+    };
   return (
     <div className='flex flex-col items-center'>
         <p className='font-semibold my-6 font-poppins xl:text-[30px] text-[23px]'>Enter storefront Details in testnet</p>
@@ -52,10 +58,11 @@ const Step0: React.FC<Step0Props> = ({onContinue}) => {
 
                 <div className='flex gap-x-4'>
                     <button className='xl:w-[10rem] w-[7.5rem] xl:h-12 h-9 border-black border rounded-full font-semibold'>Cancel</button>
-                    <button className='xl:w-[10rem] w-[7.5rem] xl:h-12 h-9 border-none rounded-full font-semibold bg-buttonGradient text-white' onClick={onContinue}>Continue</button>
+                    <button className='xl:w-[10rem] w-[7.5rem] xl:h-12 h-9 border-none rounded-full font-semibold bg-buttonGradient text-white' onClick={handleContinue}>Continue</button>
                 </div>
             </div>
         </div>
+        {isSuccessful && <LaunchSuccessModal onContinue={onContinue} />}
     </div>
   );
 };

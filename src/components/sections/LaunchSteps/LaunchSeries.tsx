@@ -2,13 +2,22 @@ import React, { useState } from 'react';
 import Input from '@/components/ui/Input';
 import { IoAddSharp } from 'react-icons/io5';
 import { inputLabel, secondInputLabel } from '../../../lib/launchSeries';
+import Instagen from './InstagenLaunch';
+import EternumLaunch from './EthernumLaunch';
 
 interface LaunchSeriesProps {
   contractType: 'signature' | 'fusion' | 'eternal' | 'phygital' | 'eternum' | 'instagen';
   onContinue: () => void;
+  onExtra:() => void;
+  onBack: () => void;
 }
 
-const ExtraLaunch: React.FC = () => {
+interface ExtraLaunchProps {
+  onContinue: () => void;
+  onBack: () => void;
+}
+
+const ExtraLaunch: React.FC<ExtraLaunchProps> = ({onContinue, onBack}) => {
   const [contractType, setContractType] = useState<'signature' | 'phygital' | 'fusion' | 'eternum' | 'eternal' | 'instagen'>('fusion');
   const caseTexts: Record<string, string[]> = {
     signature: ['Add another Signature Series', 'Choose another contract'],
@@ -19,7 +28,7 @@ const ExtraLaunch: React.FC = () => {
 
   return (
     <div>
-      <div className='flex gap-x-6 xl:gap-x-8 mt-12'>
+      <div className='flex gap-x-6 xl:gap-x-8 mt-12 h-fit'>
         <div>
           <p className='xl:text-[26px] text-[20px] font-semibold'>{text1}</p>
           <button className='xl:w-[580px] w-[435px] xl:h-[160px] h-[120px] rounded-xl border-black border-2 flex items-center justify-center xl:text-[32px] text-[24px] font-bold'><IoAddSharp /></button>
@@ -29,14 +38,27 @@ const ExtraLaunch: React.FC = () => {
           <button className='xl:w-[580px] w-[435px] xl:h-[160px] h-[120px] rounded-xl border-black border-2 flex items-center justify-center xl:text-[32px] text-[24px] font-bold'><IoAddSharp /></button>
         </div>
       </div>
+      <div className="flex justify-between mx-auto xl:gap-x-32 gap-x-24">
+          <button className='xl:w-[160px] w-[120px] xl:h-12 h-9 border-black border-none rounded-full font-semibold xl:text-[20px] text-[16px] bg-buttonGradient xl:my-16 my-12 text-white' onClick={onBack}>Back</button>
+          <button className='xl:w-[160px] w-[120px] xl:h-12 h-9 border-black border-none rounded-full font-semibold xl:text-[20px] text-[16px] bg-buttonGradient xl:my-16 my-12 text-white' onClick={onContinue}>Continue</button>
+        </div>
     </div>
   );
 };
 
-const LaunchSeries: React.FC<LaunchSeriesProps> = ({ contractType, onContinue }) => {
+const LaunchSeries: React.FC<LaunchSeriesProps> = ({ contractType, onContinue, onExtra, onBack }) => {
   const [contractName, setContractName] = useState('');
   const [contractSymbol, setContractSymbol] = useState('');
   const [extraLaunch, setExtraLaunch] = useState(false);
+
+  const handleDeployClick = () => {
+    if (['signature', 'fusion', 'eternal'].includes(contractType)) {
+      onExtra()
+      setExtraLaunch(true);
+    } else {
+      onContinue()
+    }
+  };
 
   const commonSection = (
     <div className='w-full flex flex-col xl:gap-y-16 gap-y-12'>
@@ -58,28 +80,36 @@ const LaunchSeries: React.FC<LaunchSeriesProps> = ({ contractType, onContinue })
           <IoAddSharp /> Cover Image
         </button>
       </div>
-    </div>
-  );
 
-  const handleDeployClick = () => {
-    if (['signature', 'fusion', 'eternal'].includes(contractType)) {
-      // Render a simple text 'Hello' if contractType is 'signature', 'fusion', or 'eternal'
-      setExtraLaunch(true);
-    } else {
-      // Call the onContinue function if contractType is not 'signature', 'fusion', or 'eternal'
-      onContinue();
-    }
-  };
-
-  return (
-    <div className={`${extraLaunch ? null : 'bg-[#AECDFE]'} xl:w-[1120px] w-[850px] xl:h-[920px] rounded-lg xl:py-12 py-8 xl:px-28 px-20 flex flex-col items-center xl:gap-x-8 gap-x-6 xl:mb-16 my-12`}>
-      {extraLaunch ? <ExtraLaunch /> : commonSection}
       <button
-        className='xl:w-[216px] w-[162px] xl:h-12 h-9 border-none rounded-full font-semibold xl:text-[18px] text-[14px] bg-buttonGradient xl:mt-16 mt-12 text-white'
+        className='xl:w-[216px] w-[162px] xl:h-12 h-9 border-none rounded-full font-semibold xl:text-[18px] text-[14px] bg-buttonGradient xl:mt-16 mt-12 text-white mx-auto'
         onClick={handleDeployClick}
       >
         Deploy Contract
       </button>
+    </div>
+  );
+
+  let specificComponent;
+
+  switch (contractType) {
+    case 'instagen':
+      specificComponent = <Instagen />;
+      break;
+    case 'eternum':
+      specificComponent = <EternumLaunch />;
+      break;
+    default:
+      specificComponent = commonSection;
+  };
+
+  const handleExtraLaunchDeployClick = () => {
+    setExtraLaunch(true);
+  };
+
+  return (
+    <div className={`${extraLaunch ? null : 'bg-[#AECDFE]'} xl:w-[1120px] w-[850px] xl:h-[920px] rounded-lg xl:py-12 py-8 xl:px-28 px-20 flex flex-col items-center xl:gap-x-8 gap-x-6 xl:mb-16 my-12`}>
+      {extraLaunch ? <ExtraLaunch onBack={onBack} onContinue={onContinue} /> : specificComponent}
     </div>
   );
 };
