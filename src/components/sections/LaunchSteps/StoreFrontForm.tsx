@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FaCheck } from "react-icons/fa";
 import Form1 from './Form1';
+import Form2 from './Form2';
+import Form3 from './Form3';
 
 const FormButton: React.FC<{
   selected: boolean;
@@ -30,39 +32,54 @@ const FormButton: React.FC<{
 };
 
 const StoreFrontForm: React.FC = () => {
-  const [selectedButton, setSelectedButton] = useState<number>(2);
+  const [selectedButton, setSelectedButton] = useState<number>(0);
+  const [formSteps, setFormSteps] = useState(0)
   return (
-    <div className='page'>
-      <div className='container flex justify-between'>
-        <div className='h-32 xl:w-[320px] w-[240px] flex flex-col gap-y-3'>
-          <FormButton
-            selected={selectedButton === 0}
-            stepNumber={1}
-            stepText="Storefront Details"
-            paragraphText="Storefront details"
-            wasSelected={() => selectedButton >= 0}
-          />
-          {/* --- */}
-          <FormButton
-            selected={selectedButton === 1}
-            stepNumber={2}
-            stepText="Personal Information"
-            paragraphText="Personal information"
-            wasSelected={() => selectedButton >= 1}
-          />
-          {/* --- */}
-          <FormButton
-            selected={selectedButton === 2}
-            stepNumber={3}
-            stepText="Contact Details"
-            paragraphText="Contact details"
-            wasSelected={() => selectedButton >= 2}
-          />
+    <div className='page flex-col'>
+      <div className='container'>
+        <div className=' flex justify-between'>
+          <div className='h-32 xl:w-[320px] w-[240px] flex flex-col gap-y-3'>
+            <FormButton
+              selected={selectedButton === 0}
+              stepNumber={1}
+              stepText="Storefront Details"
+              paragraphText="Storefront details"
+              wasSelected={() => selectedButton >= 0}
+            />
+            {/* --- */}
+            <FormButton
+              selected={selectedButton === 1}
+              stepNumber={2}
+              stepText="Personal Information"
+              paragraphText="Personal information"
+              wasSelected={() => selectedButton >= 1}
+            />
+            {/* --- */}
+            <FormButton
+              selected={selectedButton === 2}
+              stepNumber={3}
+              stepText="Contact Details"
+              paragraphText="Contact details"
+              wasSelected={() => selectedButton >= 2}
+            />
+          </div>
+          <div className='xl:w-[850px] w-[700px]'>
+            {formSteps === 0 && <Form1 /> }
+            {formSteps === 1 && <Form2 /> }
+            {formSteps === 2 && <Form3 /> }
+          </div>
+          <div className='h-4 xl:w-[320px] w-[240px]'></div> {/* To make the layout balanced */}
         </div>
-        <div className='xl:w-[850px] w-[700px] border'>
-          <Form3 />
+        {/* --- */}
+      </div>
+      <div className='page bg-[rgb(174,205,254)] xl:h-[120px] h-[80px] items-center justify-center xl:mt-20 mt-16'>
+        <div className='container xl:px-16 px-12 flex justify-between items-center'>
+          <button className='xl:h-[54px] h-[41px] xl:w-[190px] w-[143px] border border-black rounded-full'>Previous</button>
+          <div className='flex justify-between items-center gap-x-4'>
+            <button className='xl:h-[54px] h-[41px] xl:w-[190px] w-[143px] border border-black rounded-full'>Save As Draft</button>
+            <button className='xl:h-[54px] h-[41px] xl:w-[190px] w-[143px] rounded-full bg-buttonGradient'>Continue</button>
+          </div>
         </div>
-        <div className='border h-32 xl:w-[320px] w-[240px]'></div>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ import StoreFrontForm from '@/components/sections/LaunchSteps/StoreFrontForm';
 
 const Launch: React.FC = () => {
   const router = useRouter();
-  const [steps, setSteps] = useState<number>(() => 2); // Initialize with a function
+  const [steps, setSteps] = useState<number>(() => 0); // Initialize with a function
   const [isExtraLaunch, setExtraLaunch] = useState(false)
   const [contractType, setContractType] = useState<'signature' | 'phygital' | 'fusion' | 'eternum' | 'eternal' | 'instagen'>('fusion');
 
