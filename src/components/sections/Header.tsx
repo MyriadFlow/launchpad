@@ -4,6 +4,7 @@ import Logo from '@/public/logo.png'
 import Profile from '@/public/profile.png'
 const linkButton = 'text-[18px] font-primary font-medium'
 import AuthModal from '@/components/sections/AuthModal'
+import { ConnectKitButton } from 'connectkit'
 
 const Header: React.FC = () => {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -23,7 +24,8 @@ const Header: React.FC = () => {
         <div className='flex flex-row items-center lg:gap-x-12 md:gap-x-10 sm:gap-x-8 gap-x-8'>
           <button className={linkButton}>Launch</button>
           <button className={linkButton}>Dashboard</button>
-          <button className='bg-white px-3 py-1 rounded-full font-primary font-medium' onClick={() => setShowAuthModal(true)}>Connect wallet</button>
+          {/* <button className='bg-white px-3 py-1 rounded-full font-primary font-medium' onClick={() => setShowAuthModal(true)}>Connect wallet</button> */}
+          <ConnectKitButton />
           <button><img src={Profile.src} alt='profile-icon' className='w-10 h-10' /></button>
         </div>
       </div>
