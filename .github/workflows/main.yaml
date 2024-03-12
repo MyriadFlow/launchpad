@@ -1,0 +1,28 @@
+name: Build and Push Docker image to Azure Container Registry
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+jobs:
+  call-build-and-push-main:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/build-and-push.yaml
+    secrets:
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      tags: learneryacr.azurecr.io/learnery-course-client-prod:${{ github.sha }}
+      api_host: ${{ secrets.PROD_API_HOST }}
+
+  call-build-and-push-staging:
+    if: github.ref == 'refs/heads/staging'
+    uses: ./.github/workflows/build-and-push.yaml
+    secrets:
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      tags: learneryacr.azurecr.io/learnery-course-client-stag:${{ github.sha }}
+      api_host: ${{ secrets.STAG_API_HOST }}
+
