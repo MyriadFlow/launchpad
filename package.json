@@ -49,7 +49,7 @@
     "react-transition-group": "^4.4.5",
     "urql": "^4.0.6",
     "wagmi": "^0.5.12",
-    "web3": "^1.10.2"
+    "web3": "^4.7.0"
   },
   "devDependencies": {
     "@types/node": "18.15.11",
