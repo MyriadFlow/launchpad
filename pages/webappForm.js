@@ -60,7 +60,7 @@ function WebappForm(props) {
           {
             name: stfName,
             id: props.router.query.storefrontId,
-            network: "mumbai",
+            network: "polygon",
             protocol: "ethereum",
             tag: "v1",
             headline: stfheadline,

@@ -118,7 +118,7 @@ function AddStorefront() {
             headline: headline,
             description: description,
             blockchain: selecteBlockchaine,
-            network: "testnet",
+            network: "mainnet",
           },
           {
             headers: {
@@ -215,7 +215,7 @@ function AddStorefront() {
             Add StoreFront Details
           </div>
           <div className="text-center text-3xl font-bold mt-5">
-            Enter storefront Details in testnet
+            Enter storefront Details in mainnet
           </div>
 
           <div

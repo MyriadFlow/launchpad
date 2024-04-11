@@ -32,7 +32,7 @@ function StorefrontDashboard(props) {
     if (val) {
       setStorefrontData(networkData.filter((sf) => sf.network === "mainnet"));
     } else {
-      setStorefrontData(networkData.filter((sf) => sf.network === "testnet"));
+      setStorefrontData(networkData.filter((sf) => sf.network === "mainnet"));
     }
   };
   const deployStorefrontGraph = (storefrontData) => {
@@ -101,7 +101,7 @@ function StorefrontDashboard(props) {
           );
 
           setNetwork(
-            payload?.data?.payload.filter((sf) => sf.network === "testnet")
+            payload?.data?.payload.filter((sf) => sf.network === "mainnet")
           );
         }
         setLoading(false);
@@ -198,10 +198,10 @@ function StorefrontDashboard(props) {
           </div>
         </div>
         <div>
-          {storefrontData[0]?.network === "testnet" && (
+          {storefrontData[0]?.network === "mainnet" && (
             <div className="text-center">
               <div className="font-bold text-4xl p-5">
-                Your storefronts in Testnet
+                Your storefronts in Mainnet
               </div>
             </div>
           )}
