@@ -5,7 +5,7 @@ export const getAllEternalsolNfts = async (props) => {
   // console.log(props);
   // const { endPoint } = props;
   const endPoint =
-    "https://mumbai.testgraph.myriadflow.com/subgraphs/name/v1/u123/graphql";
+    "https://polygon.graph.myriadflow.com/subgraphs/name/v1/u123/graphql";
   const headers = {
     "Content-Type": "application/json",
   };

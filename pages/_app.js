@@ -13,13 +13,13 @@ import "../styles/demo/LoadingSpinner.css";
 import "../node_modules/react-toastify/dist/ReactToastify.css";
 
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { polygonMumbai } from "wagmi/chains";
+import { polygon } from "wagmi/chains";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { WagmiConfig, configureChains, createClient } from "wagmi";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 // const token = localStorage.getItem("platform_token");
 const client = new ApolloClient({
-  uri: "https://mumbai.testgraph.myriadflow.com/subgraphs/name/v1/u123/graphql",
+  uri: "https://polygon.graph.myriadflow.com/subgraphs/name/v1/u123/graphql",
   // uri: "https://flyby-router-demo.herokuapp.com/",
   cache: new InMemoryCache(),
   headers: {
@@ -30,14 +30,13 @@ const client = new ApolloClient({
 
 export default function MyApp({ Component, pageProps }) {
   const { chains, provider } = configureChains(
-    [polygonMumbai],
+    [polygon],
     [
       alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_MUMBAI_RPC_URL }),
       publicProvider(),
     ],
     jsonRpcProvider({
-      rpcUrl:
-        "https://rpc-mumbai.maticvigil.com/v1/f336dfba703440ee198bf937d5c065b8fe04891c",
+      rpcUrl: "process.env.NEXT_PUBLIC_RPC_PROVIDER",
     })
   );
   const { connectors } = getDefaultWallets({

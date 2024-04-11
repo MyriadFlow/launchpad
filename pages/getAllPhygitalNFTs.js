@@ -55,7 +55,7 @@ function GetAllPhygitalNfts(props) {
       body: JSON.stringify(requestBody),
     };
     const response = await fetch(
-      `https://mumbai.testgraph.myriadflow.com/subgraphs/name/${storefrontName}/${contractAddress}`,
+      `https://polygon.graph.myriadflow.com/subgraphs/name/${storefrontName}/${contractAddress}`,
       options
     )
       .then((res) => {

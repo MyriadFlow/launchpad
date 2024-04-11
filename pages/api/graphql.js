@@ -6,7 +6,7 @@ import axios from "axios";
 export default async function handler(req, res) {
   //   const { subgraphUrl } = req.query;
   const endPoint =
-    "https://mumbai.testgraph.myriadflow.com/subgraphs/name/v1/u123/graphql";
+    "https://polygon.graph.myriadflow.com/subgraphs/name/v1/u123/graphql";
   const headers = {
     "Content-Type": "application/json",
   };

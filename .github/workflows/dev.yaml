@@ -1,7 +1,9 @@
 name: "[${GITHUB_REF#refs/heads/}] Build and Push to GHCR"
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - prod
 
 jobs:
   next-build:
@@ -35,22 +37,3 @@ jobs:
           docker push $GITHUB_REF_IMAGE
           docker push $GITHUB_BRANCH_IMAGE
           rm -rf .env
-  ghcr-push:
-    needs: next-build # Job depends on next-build(above) job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy on Dev server
-        if: github.ref == 'refs/heads/main'
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.DEV_REMOTE_SERVER_ADDRESS }}
-          username: ${{ secrets.DEV_SERVER_USERNAME }}
-          key: ${{ secrets.DEV_REMOTE_SERVER_KEY }}
-          port: ${{ secrets.DEV_SSH_PORT }}
-          script: |
-            pwd
-            cd ~
-            sudo podman stop launchpad && sudo podman rm launchpad && sudo podman image rm launchpad
-            echo ${{ secrets.GHCR_TOKEN }} | podman login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
-            sudo podman pull ghcr.io/myriadflow/launchpad:main
-            sudo podman run --name="launchpad" -p 9082:3000 -d ghcr.io/myriadflow/launchpad:main
