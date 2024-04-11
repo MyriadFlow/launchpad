@@ -22,7 +22,7 @@ jobs:
 
       - name: Build and Push Docker Image
         env:
-          PROD_ENV_FILE: ${{ secrets.DEV_ENV_FILE }}
+          PROD_ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
         run: |
           echo "$PROD_ENV_FILE" > .env
           export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
@@ -37,3 +37,22 @@ jobs:
           docker push $GITHUB_REF_IMAGE
           docker push $GITHUB_BRANCH_IMAGE
           rm -rf .env
+  ghcr-push:
+    needs: next-build # Job depends on next-build(above) job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy on Dev server
+        if: github.ref == 'refs/heads/prod'
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.PROD_REMOTE_SERVER_ADDRESS }}
+          username: ${{ secrets.DEV_SERVER_USERNAME }}
+          key: ${{ secrets.DEV_REMOTE_SERVER_KEY }}
+          port: ${{ secrets.DEV_SSH_PORT }}
+          script: |
+            pwd
+            cd ~
+            docker stop launchpad && docker rm launchpad && docker image rm launchpad
+            echo ${{ secrets.GHCR_TOKEN }} | podman login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
+            docker pull ghcr.io/myriadflow/launchpad:prod
+            docker run --name="launchpad" -p 9082:3000 -d ghcr.io/myriadflow/launchpad:prod
