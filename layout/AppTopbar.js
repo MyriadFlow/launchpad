@@ -50,7 +50,7 @@ function AppTopbar() {
     const token = localStorage.getItem("platform_token");
     const { data } = await axios.get(
       // `${BASE_URL_LAUNCH}api/v1.0/profile/subscribe`,
-      `https://testnet.gateway.myriadflow.com/profile/subscribe`,
+      `https://gateway.myriadflow.com/profile/subscribe`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -58,7 +58,7 @@ const getUserDataFromLocalStorage = () => {
 const client = new NFTStorage({ token: YOUR_API_KEY });
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL_GATEWAY;
 console.log(BASE_URL);
-// const BASE_URL = "https://testnet.gateway.myriadflow.com/";
+// const BASE_URL = "https://gateway.myriadflow.com/";
 
 function Profile() {
   const { address } = useAccount();
@@ -184,7 +184,7 @@ function Profile() {
       };
       setLoading(true);
       await axios.patch(
-        "https://testnet.gateway.myriadflow.com/api/v1.0/profile",
+        "https://gateway.myriadflow.com/api/v1.0/profile",
         { ...updateProfile },
         config
       );
